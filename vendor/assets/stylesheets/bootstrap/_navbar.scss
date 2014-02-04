@@ -12,13 +12,14 @@
   position: relative;
   min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
   margin-bottom: $navbar-margin-bottom;
+  border-radius: $navbar-border-radius;
   border: 1px solid transparent;
 
   // Prevent floats from breaking the navbar
   @include clearfix();
 
-  @media (min-width: $grid-float-breakpoint) {
-    border-radius: $navbar-border-radius;
+  @media (max-width: $grid-float-breakpoint) {
+    border-radius: 0;
   }
 }
 
@@ -30,9 +31,9 @@
 
 .navbar-header {
   @include clearfix();
-
-  @media (min-width: $grid-float-breakpoint) {
-    float: left;
+  float: left;
+  @media (max-width: $grid-float-breakpoint) {
+    float: none;
   }
 }
 
@@ -48,33 +49,37 @@
 // content for the user's viewport.
 
 .navbar-collapse {
+  width: auto;
   max-height: $navbar-collapse-max-height;
   overflow-x: visible;
   padding-right: $navbar-padding-horizontal;
   padding-left:  $navbar-padding-horizontal;
-  border-top: 1px solid transparent;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
+  
   @include clearfix();
   -webkit-overflow-scrolling: touch;
 
   &.in {
-    overflow-y: auto;
+    overflow-y: visible;
+  }
+  &.collapse {
+    display: block;
+    height: auto;
+    padding-bottom: 0; // Override default setting
+    overflow: visible;
   }
 
-  @media (min-width: $grid-float-breakpoint) {
-    width: auto;
-    border-top: 0;
-    box-shadow: none;
+  @media (max-width: $grid-float-breakpoint) {
+    width: 100%;
+    border-top: 1px solid transparent;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
 
     &.collapse {
-      display: block !important;
-      height: auto !important;
-      padding-bottom: 0; // Override default setting
-      overflow: visible !important;
+      display: none;
     }
 
     &.in {
-      overflow-y: visible;
+      overflow-y: auto;
+      
     }
 
     // Undo the collapse side padding for navbars with containers to ensure
@@ -97,12 +102,12 @@
 .container-fluid {
   > .navbar-header,
   > .navbar-collapse {
-    margin-right: -$navbar-padding-horizontal;
-    margin-left:  -$navbar-padding-horizontal;
-
-    @media (min-width: $grid-float-breakpoint) {
-      margin-right: 0;
-      margin-left:  0;
+    margin-right: 0;
+    margin-left:  0;
+    
+    @media (max-width: $grid-float-breakpoint) {
+      margin-right: -$navbar-padding-horizontal;
+      margin-left:  -$navbar-padding-horizontal;
     }
   }
 }
@@ -117,10 +122,11 @@
 // Static top (unfixed, but 100% wide) navbar
 .navbar-static-top {
   z-index: $zindex-navbar;
+  border-radius: 0;
   border-width: 0 0 1px;
 
-  @media (min-width: $grid-float-breakpoint) {
-    border-radius: 0;
+  @media (max-width: $grid-float-breakpoint) {
+    border-radius: $border-radius-base;
   }
 }
 
@@ -131,10 +137,11 @@
   right: 0;
   left: 0;
   z-index: $zindex-navbar-fixed;
+  border-radius: 0;
 
-  // Undo the rounded corners
-  @media (min-width: $grid-float-breakpoint) {
-    border-radius: 0;
+  // redo the rounded corners
+  @media (max-width: $grid-float-breakpoint) {
+    border-radius: $border-radius-base;
   }
 }
 .navbar-fixed-top {
@@ -161,11 +168,15 @@
   &:focus {
     text-decoration: none;
   }
+  .navbar > .container &,
+  .navbar > .container-fluid & {
+      margin-left: -$navbar-padding-horizontal;
+    }
 
-  @media (min-width: $grid-float-breakpoint) {
+  @media (max-width: $grid-float-breakpoint) {
     .navbar > .container &,
     .navbar > .container-fluid & {
-      margin-left: -$navbar-padding-horizontal;
+      margin-left: 0;
     }
   }
 }
@@ -204,7 +215,7 @@
     margin-top: 4px;
   }
 
-  @media (min-width: $grid-float-breakpoint) {
+  @media (max-width: $grid-float-breakpoint) {
     display: none;
   }
 }
@@ -216,7 +227,21 @@
 // the nav the full height of the horizontal nav (above 768px).
 
 .navbar-nav {
-  margin: ($navbar-padding-vertical / 2) (-$navbar-padding-horizontal);
+  // Uncollapse the nav
+  float: left;
+  margin: 0;
+
+  > li {
+    float: left;
+    > a {
+      padding-top:    $navbar-padding-vertical;
+      padding-bottom: $navbar-padding-vertical;
+    }
+  }
+
+  &.navbar-right:last-child {
+    margin-right: -$navbar-padding-horizontal;
+  }
 
   > li > a {
     padding-top:    10px;
@@ -225,6 +250,14 @@
   }
 
   @media (max-width: $grid-float-breakpoint-max) {
+    float: none;
+    margin: ($navbar-padding-vertical / 2) (-$navbar-padding-horizontal);
+    > li {
+      float: none;
+      > a {
+        padding: 0;
+      }
+    }
     // Dropdowns get custom display when collapsed
     .open .dropdown-menu {
       position: static;
@@ -246,25 +279,12 @@
         }
       }
     }
-  }
-
-  // Uncollapse the nav
-  @media (min-width: $grid-float-breakpoint) {
-    float: left;
-    margin: 0;
-
-    > li {
-      float: left;
-      > a {
-        padding-top:    $navbar-padding-vertical;
-        padding-bottom: $navbar-padding-vertical;
-      }
-    }
-
     &.navbar-right:last-child {
-      margin-right: -$navbar-padding-horizontal;
+      margin-right: 0;
     }
   }
+
+  
 }
 
 
@@ -274,12 +294,18 @@
 // issues with parents and chaining. Only do this when the navbar is uncollapsed
 // though so that navbar contents properly stack and align in mobile.
 
-@media (min-width: $grid-float-breakpoint) {
+.navbar-left {
+  float: left;
+}
+.navbar-right {
+  float: right;
+}
+@media (max-width: $grid-float-breakpoint) {
   .navbar-left {
-    float: left !important;
+    float: none;
   }
   .navbar-right {
-    float: right !important;
+    float: none;
   }
 }
 
@@ -290,13 +316,15 @@
 // our navbars.
 
 .navbar-form {
-  margin-left: -$navbar-padding-horizontal;
-  margin-right: -$navbar-padding-horizontal;
+  width: auto;
+
+  border: 0;
+  margin-left: 0;
+  margin-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  @include box-shadow(none);
   padding: 10px $navbar-padding-horizontal;
-  border-top: 1px solid transparent;
-  border-bottom: 1px solid transparent;
-  $shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.1);
-  @include box-shadow($shadow);
 
   // Mixin behavior for optimum display
   @extend .form-inline;
@@ -306,23 +334,26 @@
       margin-bottom: 5px;
     }
   }
+  &.navbar-right:last-child {
+    margin-right: -$navbar-padding-horizontal;
+  }
 
   // Vertically center in expanded, horizontal navbar
   @include navbar-vertical-align($input-height-base);
 
   // Undo 100% width for pull classes
   @media (min-width: $grid-float-breakpoint) {
-    width: auto;
-    border: 0;
-    margin-left: 0;
-    margin-right: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    @include box-shadow(none);
+    width: 100%;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    margin-left: -$navbar-padding-horizontal;
+    margin-right: -$navbar-padding-horizontal;
+    $shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.1);
+    @include box-shadow($shadow);
 
     // Outdent the form if last child to line up with content down the page
     &.navbar-right:last-child {
-      margin-right: -$navbar-padding-horizontal;
+      margin-right: 0;
     }
   }
 }
@@ -363,15 +394,22 @@
 
 .navbar-text {
   @include navbar-vertical-align($line-height-computed);
+  float: left;
+  margin-left: $navbar-padding-horizontal;
+  margin-right: $navbar-padding-horizontal;
 
-  @media (min-width: $grid-float-breakpoint) {
-    float: left;
-    margin-left: $navbar-padding-horizontal;
-    margin-right: $navbar-padding-horizontal;
+  // Outdent the form if last child to line up with content down the page
+  &.navbar-right:last-child {
+    margin-right: 0;
+  }
+  @media (max-width: $grid-float-breakpoint) {
+    float: none;
+    margin-left: 0;
+    margin-right: 0;
 
     // Outdent the form if last child to line up with content down the page
     &.navbar-right:last-child {
-      margin-right: 0;
+      margin-right: -$navbar-padding-horizontal;
     }
   }
 }
