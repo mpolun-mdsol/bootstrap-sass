@@ -318,24 +318,67 @@ input[type="checkbox"],
 .form-inline {
 
   // Kick in the inline
-  @media (min-width: $screen-sm-min) {
-    // Inline-block all the things for "inline"
+  // Inline-block all the things for "inline"
+  .form-group {
+    display: inline-block;
+    margin-bottom: margin-bottom: 15px;;
+    vertical-align: default;
+  }
+
+  // In navbar-form, allow folks to *not* use `.form-group`
+  .form-control {
+    display: block;
+    width: auto; // Prevent labels from stacking above inputs in `.form-group`
+    vertical-align: middle;
+  }
+
+  .control-label {
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+
+  // Remove default margin on radios/checkboxes that were used for stacking, and
+  // then undo the floating of radios and checkboxes to match (which also avoids
+  // a bug in WebKit: https://github.com/twbs/bootstrap/issues/1969).
+  .radio,
+  .checkbox {
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    vertical-align: middle;
+  }
+  .radio input[type="radio"],
+  .checkbox input[type="checkbox"] {
+    float: none;
+    margin-left: 0;
+  }
+
+  // Validation states
+  //
+  // Reposition the icon because it's now within a grid column and columns have
+  // `position: relative;` on them. Also accounts for the grid gutter padding.
+  .has-feedback .form-control-feedback {
+    top: 0;
+  }
+  @media (max-width: $screen-sm-min) {
+    // Remove the inline
     .form-group {
-      display: inline-block;
+      display: block;
       margin-bottom: 0;
-      vertical-align: middle;
+      vertical-align: default;
     }
 
     // In navbar-form, allow folks to *not* use `.form-group`
     .form-control {
-      display: inline-block;
-      width: auto; // Prevent labels from stacking above inputs in `.form-group`
-      vertical-align: middle;
+      display: block;
+      width: 100%; 
+      vertical-align: default;
     }
 
     .control-label {
       margin-bottom: 0;
-      vertical-align: middle;
+      vertical-align: default;
     }
 
     // Remove default margin on radios/checkboxes that were used for stacking, and
@@ -343,24 +386,16 @@ input[type="checkbox"],
     // a bug in WebKit: https://github.com/twbs/bootstrap/issues/1969).
     .radio,
     .checkbox {
-      display: inline-block;
-      margin-top: 0;
-      margin-bottom: 0;
-      padding-left: 0;
-      vertical-align: middle;
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding-left: 20px;
+      vertical-align: default;
     }
     .radio input[type="radio"],
     .checkbox input[type="checkbox"] {
-      float: none;
-      margin-left: 0;
-    }
-
-    // Validation states
-    //
-    // Reposition the icon because it's now within a grid column and columns have
-    // `position: relative;` on them. Also accounts for the grid gutter padding.
-    .has-feedback .form-control-feedback {
-      top: 0;
+      float: left;
+      margin-left: -20px;
     }
   }
 }
@@ -398,11 +433,13 @@ input[type="checkbox"],
   .form-control-static {
     padding-top: ($padding-base-vertical + 1);
   }
-
+  .control-label {
+    text-align: right;
+  }
   // Only right align form labels here when the columns stop stacking
-  @media (min-width: $screen-sm-min) {
+  @media (max-width: $screen-sm-min) {
     .control-label {
-      text-align: right;
+      text-align: default;
     }
   }
 
