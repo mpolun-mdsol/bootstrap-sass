@@ -161,10 +161,11 @@
   width: 100%;
 
   > li {
-    float: none;
+    display: table-cell;
+    width: 1%;
      > a {
       text-align: center;
-      margin-bottom: 5px;
+      margin-bottom: 0;
     }
   }
 
@@ -175,10 +176,10 @@
 
   @media (min-width: $screen-sm-min) {
     > li {
-      display: table-cell;
-      width: 1%;
+      float: none;
+      display: block;
       > a {
-        margin-bottom: 0;
+        margin-bottom: 5px;
       }
     }
   }
@@ -191,26 +192,28 @@
   border-bottom: 0;
 
   > li > a {
+    border-bottom: 1px solid $nav-tabs-justified-link-border-color;
+    border-radius: $border-radius-base $border-radius-base 0 0;
     // Override margin from .nav-tabs
     margin-right: 0;
-    border-radius: $border-radius-base;
+    
   }
 
   > .active > a,
   > .active > a:hover,
   > .active > a:focus {
-    border: 1px solid $nav-tabs-justified-link-border-color;
+    border: 1px solid $nav-tabs-justified-active-link-border-color$nav-tabs-justified-link-border-color;
   }
 
-  @media (min-width: $screen-sm-min) {
+  @media (max-width: $screen-sm-min) {
     > li > a {
-      border-bottom: 1px solid $nav-tabs-justified-link-border-color;
-      border-radius: $border-radius-base $border-radius-base 0 0;
+      border-bottom: 0;
+      border-radius: $border-radius-base;
     }
     > .active > a,
     > .active > a:hover,
     > .active > a:focus {
-      border-bottom-color: $nav-tabs-justified-active-link-border-color;
+      border-bottom-color: $nav-tabs-justified-link-border-color;
     }
   }
 }
