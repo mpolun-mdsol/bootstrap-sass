@@ -61,12 +61,12 @@ p {
 
 .lead {
   margin-bottom: $line-height-computed;
-  font-size: floor(($font-size-base * 1.15));
   font-weight: 200;
   line-height: 1.4;
+  font-size: ($font-size-base * 1.5);
 
-  @media (min-width: $screen-sm-min) {
-    font-size: ($font-size-base * 1.5);
+  @media (max-width: $screen-sm-min) {
+    font-size: floor(($font-size-base * 1.15));
   }
 }
 
@@ -188,19 +188,30 @@ dd {
 //
 // Defaults to being stacked without any of the below styles applied, until the
 // grid breakpoint is reached (default of ~768px).
-
-@media (min-width: $grid-float-breakpoint) {
-  .dl-horizontal {
-    dt {
-      float: left;
-      width: ($component-offset-horizontal - 20);
-      clear: left;
-      text-align: right;
-      @include text-overflow();
-    }
-    dd {
-      margin-left: $component-offset-horizontal;
-      @include clearfix(); // Clear the floated `dt` if an empty `dd` is present
+.dl-horizontal {
+  dt {
+    float: left;
+    width: ($component-offset-horizontal - 20);
+    clear: left;
+    text-align: right;
+    @include text-overflow();
+  }
+  dd {
+    margin-left: $component-offset-horizontal;
+    @include clearfix(); // Clear the floated `dt` if an empty `dd` is present
+  }
+}
+@media (max-width: $grid-float-breakpoint) {
+  dt {
+    float: none;
+    width: auto;
+    clear: none;
+    text-align: left;
+  }
+  dd {
+    margin-left: 0;
+    :before, :after {
+      display: none;
     }
   }
 }
