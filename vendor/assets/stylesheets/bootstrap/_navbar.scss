@@ -342,6 +342,7 @@
   @include navbar-vertical-align($input-height-base);
 
   // Undo 100% width for pull classes
+  // TODO: reverse this media query -- it's not used currently as far as I can tell
   @media (min-width: $grid-float-breakpoint) {
     width: 100%;
     border-top: 1px solid transparent;

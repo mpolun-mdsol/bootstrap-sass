@@ -810,6 +810,17 @@
   }
 }
 
+@mixin unmake-grid-columns-float($class) {
+  $list: '';
+  $i: 1;
+  $list: ".col-#{$class}-#{$i}";
+  @for $i from 2 through $grid-columns {
+    $list: ".col-#{$class}-#{$i}, #{$list}";
+  }
+  #{$list} {
+    float: none;
+  }
+}
 
 @mixin calc-grid($index, $class, $type) {
   @if ($type == width) and ($index > 0) {
@@ -834,13 +845,40 @@
   }
 }
 
+@mixin nullify-grid($index, $class, $type) {
+  @if ($type == width) and ($index > 0) {
+    .col-#{$class}-#{$index} {
+      width: default;
+    }
+  }
+  @if ($type == push) {
+    .col-#{$class}-push-#{$index} {
+      left: default;
+    }
+  }
+  @if ($type == pull) {
+    .col-#{$class}-pull-#{$index} {
+      right: default;
+    }
+  }
+  @if ($type == offset) {
+    .col-#{$class}-offset-#{$index} {
+      margin-left: default;
+    }
+  }
+}
+
 // [converter] This is defined recursively in LESS, but SASS supports real loops
 @mixin make-grid($columns, $class, $type) {
   @for $i from 0 through $columns {
     @include calc-grid($i, $class, $type);
   }
 }
-
+@mixin unmake-grid($columns, $class, $type) {
+  @for $i from 0 through $columns {
+    @include nullify-grid($i, $class, $type);
+  }
+}
 
 
 // Form validation states

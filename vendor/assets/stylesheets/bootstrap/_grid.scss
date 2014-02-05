@@ -49,54 +49,58 @@
 
 @include make-grid-columns();
 
-
-// Extra small grid
-//
-// Columns, offsets, pushes, and pulls for extra small devices like
-// smartphones.
-
-@media (max-width: $screen-sm-min) {
-  @include make-grid-columns-float(xs);
-  @include make-grid($grid-columns, xs, width);
-  @include make-grid($grid-columns, xs, pull);
-  @include make-grid($grid-columns, xs, push);
-  @include make-grid($grid-columns, xs, offset);
-}
-
-// Small grid
-//
-// Columns, offsets, pushes, and pulls for the small device range, from phones
-// to tablets.
-
-@media (max-width: $screen-md-min) {
-  @include make-grid-columns-float(sm);
-  @include make-grid($grid-columns, sm, width);
-  @include make-grid($grid-columns, sm, pull);
-  @include make-grid($grid-columns, sm, push);
-  @include make-grid($grid-columns, sm, offset);
-}
-
-
-// Medium grid
-//
-// Columns, offsets, pushes, and pulls for the desktop device range.
-
-@media (max-width: $screen-lg-min) {
-  @include make-grid-columns-float(md);
-  @include make-grid($grid-columns, md, width);
-  @include make-grid($grid-columns, md, pull);
-  @include make-grid($grid-columns, md, push);
-  @include make-grid($grid-columns, md, offset);
-}
-
-
-// Large grid
-//
-// Columns, offsets, pushes, and pulls for the large desktop device range.
-
+// make grid
+@include make-grid-columns-float(xs);
+@include make-grid($grid-columns, xs, width);
+@include make-grid($grid-columns, xs, pull);
+@include make-grid($grid-columns, xs, push);
+@include make-grid($grid-columns, xs, offset);
+@include make-grid-columns-float(sm);
+@include make-grid($grid-columns, sm, width);
+@include make-grid($grid-columns, sm, pull);
+@include make-grid($grid-columns, sm, push);
+@include make-grid($grid-columns, sm, offset);
+@include make-grid-columns-float(md);
+@include make-grid($grid-columns, md, width);
+@include make-grid($grid-columns, md, pull);
+@include make-grid($grid-columns, md, push);
+@include make-grid($grid-columns, md, offset);
 @include make-grid-columns-float(lg);
 @include make-grid($grid-columns, lg, width);
 @include make-grid($grid-columns, lg, pull);
 @include make-grid($grid-columns, lg, push);
 @include make-grid($grid-columns, lg, offset);
+
+
+
+// hide sm grid on xs screens
+
+@media (max-width: $screen-sm-min) {
+  @include unmake-grid-columns-float(sm);
+  @include unmake-grid($grid-columns, sm, width);
+  @include unmake-grid($grid-columns, sm, pull);
+  @include unmake-grid($grid-columns, sm, push);
+  @include unmake-grid($grid-columns, sm, offset);
+}
+
+// hide md grid on sm screens
+
+@media (max-width: $screen-md-min) {
+  @include unmake-grid-columns-float(md);
+  @include unmake-grid($grid-columns, md, width);
+  @include unmake-grid($grid-columns, md, pull);
+  @include unmake-grid($grid-columns, md, push);
+  @include unmake-grid($grid-columns, md, offset);
+}
+
+
+// hide lg grid on md screens
+
+@media (max-width: $screen-lg-min) {
+  @include unmake-grid-columns-float(lg);
+  @include unmake-grid($grid-columns, lg, width);
+  @include unmake-grid($grid-columns, lg, pull);
+  @include unmake-grid($grid-columns, lg, push);
+  @include unmake-grid($grid-columns, lg, offset);
+}
 
