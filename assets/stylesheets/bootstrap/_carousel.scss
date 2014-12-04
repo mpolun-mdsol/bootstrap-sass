@@ -132,6 +132,10 @@
     top: 50%;
     z-index: 5;
     display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-top: -15px;
+    font-size: 30px;
   }
   .icon-prev,
   .glyphicon-chevron-left {
@@ -151,6 +155,14 @@
     font-family: serif;
   }
 
+  .glyphicon-chevron-left,
+  .icon-prev {
+    margin-left: -15px;
+  }
+  .glyphicon-chevron-right,
+  .icon-next {
+    margin-right: -15px;
+  }
 
   .icon-prev {
     &:before {
@@ -171,7 +183,7 @@
 
 .carousel-indicators {
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   left: 50%;
   z-index: 15;
   width: 60%;
@@ -212,14 +224,15 @@
 // Optional captions
 // -----------------------------
 // Hidden by default for smaller viewports
+// Show and left align the captions
 .carousel-caption {
   position: absolute;
-  left: 15%;
-  right: 15%;
+  left: 20%;
+  right: 20%;
   bottom: 20px;
   z-index: 10;
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 30px;
   color: $carousel-caption-color;
   text-align: center;
   text-shadow: $carousel-text-shadow;
@@ -238,30 +251,30 @@
     .glyphicon-chevron-right,
     .icon-prev,
     .icon-next {
-      width: 30px;
-      height: 30px;
-      margin-top: -15px;
-      font-size: 30px;
+      width: 100%;
+      height: 100%;
+      margin-top: 0;
+      font-size: $carousel-control-font-size;
     }
     .glyphicon-chevron-left,
     .icon-prev {
-      margin-left: -15px;
+      margin-left: 0;
     }
     .glyphicon-chevron-right,
     .icon-next {
-      margin-right: -15px;
+      margin-right: 0;
     }
   }
 
   // Show and left align the captions
   .carousel-caption {
-    left: 20%;
-    right: 20%;
-    padding-bottom: 30px;
+    left: 15%;
+    right: 15%;
+    padding-bottom: 20px;
   }
 
   // Move up the indicators
   .carousel-indicators {
-    bottom: 20px;
+    bottom: 10px;
   }
 }
