@@ -404,35 +404,97 @@ input[type="checkbox"] {
 // [converter] extracted from `.form-inline` for libsass compatibility
 @mixin form-inline {
 
-  // Kick in the inline
-  @media (min-width: $screen-sm-min) {
-    // Inline-block all the things for "inline"
-    .form-group {
-      display: inline-block;
-      margin-bottom: 0;
-      vertical-align: middle;
-    }
+  // Inline-block all the things for "inline"
+  .form-group {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
 
-    // In navbar-form, allow folks to *not* use `.form-group`
+  // In navbar-form, allow folks to *not* use `.form-group`
+  .form-control {
+    display: inline-block;
+    width: auto; // Prevent labels from stacking above inputs in `.form-group`
+    vertical-align: middle;
+  }
+
+  // Make static controls behave like regular ones
+  .form-control-static {
+    display: inline-block;
+  }
+
+  .input-group {
+    display: inline-table;
+    vertical-align: middle;
+
+    .input-group-addon,
+    .input-group-btn,
     .form-control {
-      display: inline-block;
-      width: auto; // Prevent labels from stacking above inputs in `.form-group`
+      width: auto;
+    }
+  }
+
+  // Input groups need that 100% width though
+  .input-group > .form-control {
+    width: 100%;
+  }
+
+  .control-label {
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+
+  // Remove default margin on radios/checkboxes that were used for stacking, and
+  // then undo the floating of radios and checkboxes to match (which also avoids
+  // a bug in WebKit: https://github.com/twbs/bootstrap/issues/1969).
+  .radio,
+  .checkbox {
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle;
+
+    label {
+      padding-left: 0;
+    }
+  }
+  .radio input[type="radio"],
+  .checkbox input[type="checkbox"] {
+    position: relative;
+    margin-left: 0;
+  }
+
+  // Re-override the feedback icon.
+  .has-feedback .form-control-feedback {
+    top: 0;
+  }
+    // Remove the inline
+  @media (max-width: $screen-xs-max) {
+    .form-group {
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .form-control {
+      display: block;
+      width: 100%;
       vertical-align: middle;
     }
 
-    // Make static controls behave like regular ones
     .form-control-static {
-      display: inline-block;
+      display: block;
     }
 
     .input-group {
-      display: inline-table;
+      display: table;
       vertical-align: middle;
 
       .input-group-addon,
-      .input-group-btn,
+      .input-group-btn{
+        width: 1%;
+      }
       .form-control {
-        width: auto;
+        width: 100%
       }
     }
 
@@ -509,13 +571,19 @@ input[type="checkbox"] {
     @include make-row;
   }
 
+  .control-label {
+    text-align: right;
+    margin-bottom: 0;
+    padding-top: ($padding-base-vertical + 1); // Default padding plus a border
+  }
+
   // Reset spacing and right align labels, but scope to media queries so that
   // labels on narrow viewports stack the same as a default form example.
-  @media (min-width: $screen-sm-min) {
+  @media (max-width: $screen-xs-max) {
     .control-label {
-      text-align: right;
-      margin-bottom: 0;
-      padding-top: ($padding-base-vertical + 1); // Default padding plus a border
+      text-align: default;
+      margin-bottom: 5px;
+      padding-top: 0; 
     }
   }
 
@@ -532,16 +600,22 @@ input[type="checkbox"] {
   // Quick utility class for applying `.input-lg` and `.input-sm` styles to the
   // inputs and labels within a `.form-group`.
   .form-group-lg {
-    @media (min-width: $screen-sm-min) {
+    .control-label {
+      padding-top: (($padding-large-vertical * $line-height-large) + 1);
+    }
+    @media (max-width: $screen-xs-max) {
       .control-label {
-        padding-top: (($padding-large-vertical * $line-height-large) + 1);
+        padding-top: 0;
       }
     }
   }
   .form-group-sm {
-    @media (min-width: $screen-sm-min) {
+    .control-label {
+      padding-top: ($padding-small-vertical + 1);
+    }
+    @media (max-width: $screen-xs-max) {
       .control-label {
-        padding-top: ($padding-small-vertical + 1);
+        padding-top: 0;
       }
     }
   }
