@@ -43,8 +43,8 @@
 // Shell div to position the modal with bottom padding
 .modal-dialog {
   position: relative;
-  width: auto;
-  margin: 10px;
+  width: $modal-md;
+  margin: 30px auto;
 }
 
 // Actual modal
@@ -54,7 +54,7 @@
   border: 1px solid $modal-content-fallback-border-color; //old browsers fallback (ie8 etc)
   border: 1px solid $modal-content-border-color;
   border-radius: $border-radius-large;
-  @include box-shadow(0 3px 9px rgba(0,0,0,.5));
+  @include box-shadow(0 5px 15px rgba(0,0,0,.5));
   background-clip: padding-box;
   // Remove focus outline from opened modal
   outline: 0;
@@ -128,21 +128,24 @@
   overflow: scroll;
 }
 
-// Scale up the modal
-@media (min-width: $screen-sm-min) {
-  // Automatically set modal's width for larger viewports
+
+// Modal sizes
+.modal-sm { width: $modal-sm; }
+// Scale down the modal
+@media (max-width: $screen-xs-max) {
   .modal-dialog {
-    width: $modal-md;
-    margin: 30px auto;
+    width: auto;
+    margin: 10px;
   }
   .modal-content {
-    @include box-shadow(0 5px 15px rgba(0,0,0,.5));
+    @include box-shadow(0 3px 9px rgba(0,0,0,.5));
   }
 
   // Modal sizes
-  .modal-sm { width: $modal-sm; }
+  .modal-sm { width: auto; }
 }
 
-@media (min-width: $screen-md-min) {
-  .modal-lg { width: $modal-lg; }
+.modal-lg { width: $modal-lg; }
+@media (max-width: $screen-sm-max) {
+  .modal-lg { width: auto; }
 }
