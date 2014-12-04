@@ -230,7 +230,7 @@
 
 
 // Scale up controls for tablets and up
-@media screen and (min-width: $screen-sm-min) {
+@media screen and (max-width: $screen-xs-max) {
 
   // Scale up the controls a smidge
   .carousel-control {
