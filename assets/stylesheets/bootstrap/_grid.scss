@@ -10,8 +10,9 @@
 .container {
   @include container-fixed;
 
+  width: $container-lg;
   @media (max-width: $screen-xs-max) {
-    width: $container-xs;
+    width: 100%;
   }
   @media (min-width: $screen-sm-max) {
     width: $container-sm;
