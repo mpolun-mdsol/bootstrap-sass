@@ -44,6 +44,17 @@
   display: none !important;
 }
 
+@include responsive-visibility('.visible-lg');
+.visible-lg-block {
+  display: block !important;
+}
+.visible-lg-inline {
+  display: inline !important;
+}
+.visible-lg-inline-block {
+  display: inline-block !important;
+}
+
 @media (max-width: $screen-xs-max) {
   @include responsive-visibility('.visible-xs');
   @include hide-lg()
@@ -102,18 +113,6 @@
   @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
     display: inline-block !important;
   }
-}
-
-
-@include responsive-visibility('.visible-lg');
-.visible-lg-block {
-  display: block !important;
-}
-.visible-lg-inline {
-  display: inline !important;
-}
-.visible-lg-inline-block {
-  display: inline-block !important;
 }
 
 @include responsive-invisibility('.hidden-lg');
