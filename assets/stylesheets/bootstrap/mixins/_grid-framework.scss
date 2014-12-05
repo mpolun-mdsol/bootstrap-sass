@@ -18,7 +18,6 @@
   }
 }
 
-
 // [converter] This is defined recursively in LESS, but Sass supports real loops
 @mixin float-grid-columns($class, $i: 1, $list: ".col-#{$class}-#{$i}") {
   @for $i from (1 + 1) through $grid-columns {
@@ -29,6 +28,14 @@
   }
 }
 
+@mixin unfloat-grid-columns($class, $i: 1, $list: ".col-#{$class}-#{$i}") {
+  @for $i from (1 + 1) through $grid-columns {
+    $list: "#{$list}, .col-#{$class}-#{$i}";
+  }
+  #{$list} {
+    float: none;
+  }
+}
 
 @mixin calc-grid-column($index, $class, $type) {
   @if ($type == width) and ($index > 0) {
@@ -63,6 +70,39 @@
   }
 }
 
+@mixin uncalc-grid-column($index, $class, $type) {
+  @if ($type == width) and ($index > 0) {
+    .col-#{$class}-#{$index} {
+      width: 100%;
+    }
+  }
+  @if ($type == push) and ($index > 0) {
+    .col-#{$class}-push-#{$index} {
+      left: auto;
+    }
+  }
+  @if ($type == push) and ($index == 0) {
+    .col-#{$class}-push-0 {
+      left: auto;
+    }
+  }
+  @if ($type == pull) and ($index > 0) {
+    .col-#{$class}-pull-#{$index} {
+      right: auto;
+    }
+  }
+  @if ($type == pull) and ($index == 0) {
+    .col-#{$class}-pull-0 {
+      right: auto;
+    }
+  }
+  @if ($type == offset) {
+    .col-#{$class}-offset-#{$index} {
+      margin-left: 0;
+    }
+  }
+}
+
 // [converter] This is defined recursively in LESS, but Sass supports real loops
 @mixin loop-grid-columns($columns, $class, $type) {
   @for $i from 0 through $columns {
@@ -70,6 +110,11 @@
   }
 }
 
+@mixin unloop-grid-columns($columns, $class, $type) {
+  @for $i from 0 through $columns {
+    @include uncalc-grid-column($i, $class, $type);
+  }
+}
 
 // Create grid for specific class
 @mixin make-grid($class) {
@@ -78,4 +123,12 @@
   @include loop-grid-columns($grid-columns, $class, pull);
   @include loop-grid-columns($grid-columns, $class, push);
   @include loop-grid-columns($grid-columns, $class, offset);
+}
+
+@mixin unmake-grid($class) {
+  @include unfloat-grid-columns($class);
+  @include unloop-grid-columns($grid-columns, $class, width);
+  @include unloop-grid-columns($grid-columns, $class, pull);
+  @include unloop-grid-columns($grid-columns, $class, push);
+  @include unloop-grid-columns($grid-columns, $class, offset);
 }

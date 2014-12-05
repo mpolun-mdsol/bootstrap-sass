@@ -52,6 +52,9 @@
 //
 // Columns, offsets, pushes, and pulls for the large desktop device range.
 @include make-grid(lg);
+@include make-grid(xs);
+@include make-grid(sm);
+@include make-grid(md);
 
 
 // Extra small grid
@@ -59,7 +62,7 @@
 // Columns, offsets, pushes, and pulls for extra small devices like
 // smartphones.
 @media (max-width: $screen-xs-max) {
-  @include make-grid(xs);
+  @include unmake-grid(sm);
 }
 
 
@@ -69,7 +72,7 @@
 // Columns, offsets, pushes, and pulls for the small device range, from phones
 // to tablets.
 @media (max-width: $screen-sm-max) {
-  @include make-grid(sm);
+  @include unmake-grid(md);
 }
 
 
@@ -78,5 +81,5 @@
 //
 // Columns, offsets, pushes, and pulls for the desktop device range.
 @media (max-width: $screen-md-max) {
-  @include make-grid(md);
+  @include unmake-grid(lg);
 }
