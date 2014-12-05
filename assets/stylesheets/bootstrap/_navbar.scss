@@ -248,23 +248,33 @@
 // the nav the full height of the horizontal nav (above 768px).
 
 .navbar-nav {
-  margin: ($navbar-padding-vertical / 2) (-$navbar-padding-horizontal);
 
   > li > a {
     padding-top:    10px;
     padding-bottom: 10px;
-    line-height: $line-height-computed;
+  }
+
+  float: left;
+  margin: 0;
+
+  > li {
+    float: left;
+    > a {
+      padding-top:    $navbar-padding-vertical;
+      padding-bottom: $navbar-padding-vertical;
+      line-height: $line-height-computed;
+    }
   }
 
   @media (max-width: $grid-float-breakpoint-max) {
-    float: left;
-    margin: 0;
+    float: none;
+    margin: ($navbar-padding-vertical / 2) (-$navbar-padding-horizontal);
 
     > li {
-      float: left;
+      float: none;
       > a {
-        padding-top:    $navbar-padding-vertical;
-        padding-bottom: $navbar-padding-vertical;
+        padding-top:    10px;
+        padding-bottom: 10px;
       }
     }
     // Dropdowns get custom display when collapsed
