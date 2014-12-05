@@ -81,6 +81,10 @@
       display: none;
       visibility: hidden;
     }
+    &.collapse.in {
+      display: block;
+      visibility: visible;
+    }
 
     &.in {
       overflow-y: auto;
